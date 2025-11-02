@@ -144,7 +144,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                   className="w-full border-primary text-primary"
                   aria-label="Sign in to your account"
                 >
-                  Sign In
+                  Join The Waitlist
                 </Button>
                 <Button 
                   className="w-full bg-gradient-to-r from-primary to-secondary"
