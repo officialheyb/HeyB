@@ -6,7 +6,7 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { useState } from "react";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 
 export function Support() {
   const [formData, setFormData] = useState({
@@ -404,21 +404,21 @@ export function Support() {
             <div>
               <h3 className="text-xl font-['Poppins'] mb-2">Visit Our Blog</h3>
               <p className="text-white/80 mb-4">Tips, guides, and industry insights</p>
-              <Button variant="outline" className="border-white text-white hover:bg-dark/10">
+              <Button variant="outline" className="border-white text-primary hover:bg-dark/10">
                 Read Blog
               </Button>
             </div>
             <div>
               <h3 className="text-xl font-['Poppins'] mb-2">How It Works</h3>
               <p className="text-white/80 mb-4">Learn about our platform</p>
-              <Button variant="outline" className="border-white text-white hover:bg-primary/10">
+              <Button variant="outline" className="border-white text-primary hover:bg-primary/10">
                 Learn More
               </Button>
             </div>
             <div>
               <h3 className="text-xl font-['Poppins'] mb-2">Safety Center</h3>
               <p className="text-white/80 mb-4">Stay safe on HeyB</p>
-              <Button variant="outline" className="border-white text-white hover:bg-white/10">
+              <Button variant="outline" className="border-white text-primary hover:bg-white/10">
                 Safety Tips
               </Button>
             </div>

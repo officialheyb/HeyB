@@ -1,12 +1,32 @@
-import { Search, Shield, Clock, Star, CheckCircle, ArrowRight, Wrench, Paintbrush, Car, Laptop, Sparkles, Users } from "lucide-react";
+import {
+  Search,
+  Shield,
+  Clock,
+  Star,
+  CheckCircle,
+  ArrowRight,
+  Wrench,
+  Paintbrush,
+  Car,
+  Laptop,
+  Sparkles,
+  Users,
+} from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Card } from "../ui/card";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 import { TypingEffect } from "../TypingEffect";
 import { useState } from "react";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 import Autoplay from "embla-carousel-autoplay";
+import { Helmet } from "react-helmet";
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -19,7 +39,7 @@ export function Home({ onNavigate }: HomeProps) {
     e.preventDefault();
     if (searchQuery.trim()) {
       toast.success(`Searching for "${searchQuery}"...`, {
-        description: "We're finding the best providers for your needs!"
+        description: "We're finding the best providers for your needs!",
       });
       // In a real app, this would navigate to search results
       onNavigate("services");
@@ -33,7 +53,11 @@ export function Home({ onNavigate }: HomeProps) {
     { icon: Car, name: "Auto Repair", color: "text-secondary" },
     { icon: Sparkles, name: "Beauty Services", color: "text-accent" },
     { icon: Laptop, name: "Tech Support", color: "text-primary" },
-    { icon: Paintbrush, name: "Professional Services", color: "text-secondary" },
+    {
+      icon: Paintbrush,
+      name: "Professional Services",
+      color: "text-secondary",
+    },
     { icon: Users, name: "Event Services", color: "text-accent" },
   ];
 
@@ -41,19 +65,22 @@ export function Home({ onNavigate }: HomeProps) {
     {
       icon: Shield,
       title: "Verified Providers",
-      description: "All service providers are thoroughly vetted and verified for your peace of mind.",
+      description:
+        "All service providers are thoroughly vetted and verified for your peace of mind.",
       color: "bg-primary/10 text-primary",
     },
     {
       icon: Clock,
       title: "Quick Response",
-      description: "Get multiple quotes within hours and hire the right professional for your job.",
+      description:
+        "Get multiple quotes within hours and hire the right professional for your job.",
       color: "bg-secondary/10 text-secondary",
     },
     {
       icon: Star,
       title: "Quality Guaranteed",
-      description: "Read reviews, compare ratings, and choose professionals with proven track records.",
+      description:
+        "Read reviews, compare ratings, and choose professionals with proven track records.",
       color: "bg-accent/20 text-accent-foreground",
     },
   ];
@@ -140,18 +167,23 @@ export function Home({ onNavigate }: HomeProps) {
         <div className="floating-shape floating-shape-1"></div>
         <div className="floating-shape floating-shape-2"></div>
         <div className="floating-shape floating-shape-3"></div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-14 animate-slide-up">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-['Poppins'] mb-6 sm:mb-8 text-primary px-4 min-h-[5rem]">
               <TypingEffect text="Find. Hire. Get It Done." speed={100} />
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-8 sm:mb-10 px-4 leading-relaxed">
-              Connect with verified local service providers across Nigeria and Africa. From home maintenance to professional services, find trusted experts in minutes.
+              Connect with verified local service providers across Nigeria and
+              Africa. From home maintenance to professional services, find
+              trusted experts in minutes.
             </p>
 
             {/* Search Bar */}
-            <form onSubmit={handleSearch} className="glass rounded-2xl shadow-2xl p-3 flex flex-col sm:flex-row gap-3 max-w-3xl mx-auto hover-glow">
+            <form
+              onSubmit={handleSearch}
+              className="glass rounded-2xl shadow-2xl p-3 flex flex-col sm:flex-row gap-3 max-w-3xl mx-auto hover-glow"
+            >
               <div className="flex-1 flex items-center px-4 sm:border-r border-border/30">
                 <Search className="w-6 h-6 text-primary mr-3 flex-shrink-0" />
                 <Input
@@ -161,7 +193,10 @@ export function Home({ onNavigate }: HomeProps) {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <Button type="submit" className="bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] hover:bg-[position:100%_0] transition-all duration-500 px-8 sm:px-10 py-6 w-full sm:w-auto shadow-lg">
+              <Button
+                type="submit"
+                className="bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] hover:bg-[position:100%_0] transition-all duration-500 px-8 sm:px-10 py-6 w-full sm:w-auto shadow-lg"
+              >
                 Search Services
               </Button>
             </form>
@@ -174,7 +209,9 @@ export function Home({ onNavigate }: HomeProps) {
                   className="flex items-center space-x-2 px-4 sm:px-5 py-3 glass rounded-full shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 border border-white/30 group"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <service.icon className={`w-5 h-5 ${service.color} group-hover:scale-110 transition-transform`} />
+                  <service.icon
+                    className={`w-5 h-5 ${service.color} group-hover:scale-110 transition-transform`}
+                  />
                   <span className="text-sm">{service.name}</span>
                 </button>
               ))}
@@ -193,7 +230,9 @@ export function Home({ onNavigate }: HomeProps) {
                 <div className="text-4xl md:text-5xl lg:text-6xl font-bold font-['Poppins'] text-primary mb-3 group-hover:scale-110 transition-transform duration-300">
                   {stat.value}
                 </div>
-                <div className="text-muted-foreground text-sm md:text-base">{stat.label}</div>
+                <div className="text-muted-foreground text-sm md:text-base">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
@@ -209,18 +248,28 @@ export function Home({ onNavigate }: HomeProps) {
               Why Choose HeyB?
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              We're building trust and transparency in Africa's service marketplace
+              We're building trust and transparency in Africa's service
+              marketplace
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
             {features.map((feature, index) => (
-              <Card key={index} className="p-10 hover:shadow-2xl transition-all duration-500 border-2 border-transparent hover:border-primary/30 bg-white/80 backdrop-blur-sm group hover:-translate-y-2">
-                <div className={`w-16 h-16 rounded-2xl ${feature.color} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300`}>
+              <Card
+                key={index}
+                className="p-10 hover:shadow-2xl transition-all duration-500 border-2 border-transparent hover:border-primary/30 bg-white/80 backdrop-blur-sm group hover:-translate-y-2"
+              >
+                <div
+                  className={`w-16 h-16 rounded-2xl ${feature.color} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300`}
+                >
                   <feature.icon className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-['Poppins'] mb-4">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                <h3 className="text-2xl font-['Poppins'] mb-4">
+                  {feature.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {feature.description}
+                </p>
               </Card>
             ))}
           </div>
@@ -242,17 +291,41 @@ export function Home({ onNavigate }: HomeProps) {
 
           <div className="grid md:grid-cols-4 gap-8 lg:gap-6">
             {[
-              { step: "1", title: "Post Your Job", desc: "Tell us what you need done", color: "bg-gradient-to-br from-primary to-primary/80" },
-              { step: "2", title: "Compare Quotes", desc: "Get multiple quotes from verified pros", color: "bg-gradient-to-br from-secondary to-secondary/80" },
-              { step: "3", title: "Hire the Best", desc: "Choose based on reviews and price", color: "bg-gradient-to-br from-accent to-accent/80" },
-              { step: "4", title: "Pay Securely", desc: "Complete payment through our platform", color: "bg-gradient-to-br from-primary to-secondary" },
+              {
+                step: "1",
+                title: "Post Your Job",
+                desc: "Tell us what you need done",
+                color: "bg-gradient-to-br from-primary to-primary/80",
+              },
+              {
+                step: "2",
+                title: "Compare Quotes",
+                desc: "Get multiple quotes from verified pros",
+                color: "bg-gradient-to-br from-secondary to-secondary/80",
+              },
+              {
+                step: "3",
+                title: "Hire the Best",
+                desc: "Choose based on reviews and price",
+                color: "bg-gradient-to-br from-accent to-accent/80",
+              },
+              {
+                step: "4",
+                title: "Pay Securely",
+                desc: "Complete payment through our platform",
+                color: "bg-gradient-to-br from-primary to-secondary",
+              },
             ].map((item, index) => (
               <div key={index} className="text-center relative group">
-                <div className={`w-20 h-20 rounded-full ${item.color} text-white flex items-center justify-center mx-auto mb-6 text-3xl font-bold font-['Poppins'] shadow-xl group-hover:scale-110 transition-transform duration-300`}>
+                <div
+                  className={`w-20 h-20 rounded-full ${item.color} text-white flex items-center justify-center mx-auto mb-6 text-3xl font-bold font-['Poppins'] shadow-xl group-hover:scale-110 transition-transform duration-300`}
+                >
                   {item.step}
                 </div>
                 <h3 className="text-xl font-['Poppins'] mb-3">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed px-2">{item.desc}</p>
+                <p className="text-muted-foreground leading-relaxed px-2">
+                  {item.desc}
+                </p>
                 {index < 3 && (
                   <ArrowRight className="hidden md:block absolute top-10 -right-3 text-muted-foreground/20 w-10 h-10" />
                 )}
@@ -291,7 +364,7 @@ export function Home({ onNavigate }: HomeProps) {
               plugins={[
                 Autoplay({
                   delay: 4000,
-                })
+                }),
               ]}
               opts={{
                 align: "start",
@@ -301,21 +374,38 @@ export function Home({ onNavigate }: HomeProps) {
             >
               <CarouselContent className="-ml-2 md:-ml-4">
                 {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem
+                    key={index}
+                    className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3"
+                  >
                     <Card className="p-8 h-full bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 border-2 border-transparent hover:border-primary/20 group">
                       <div className="flex mb-5">
                         {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="w-6 h-6 fill-accent text-accent group-hover:scale-110 transition-transform" style={{ transitionDelay: `${i * 0.05}s` }} />
+                          <Star
+                            key={i}
+                            className="w-6 h-6 fill-accent text-accent group-hover:scale-110 transition-transform"
+                            style={{ transitionDelay: `${i * 0.05}s` }}
+                          />
                         ))}
                       </div>
-                      <p className="text-muted-foreground mb-8 italic leading-relaxed">\"{testimonial.text}\"</p>
+                      <p className="text-muted-foreground mb-8 italic leading-relaxed">
+                        \"{testimonial.text}\"
+                      </p>
                       <div className="flex items-center">
-                        <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${testimonial.color} flex items-center justify-center mr-4 ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all shadow-lg`}>
-                          <span className="text-white font-bold text-lg">{testimonial.initials}</span>
+                        <div
+                          className={`w-14 h-14 rounded-full bg-gradient-to-br ${testimonial.color} flex items-center justify-center mr-4 ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all shadow-lg`}
+                        >
+                          <span className="text-white font-bold text-lg">
+                            {testimonial.initials}
+                          </span>
                         </div>
                         <div>
-                          <div className="font-['Poppins']">{testimonial.name}</div>
-                          <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                          <div className="font-['Poppins']">
+                            {testimonial.name}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {testimonial.role}
+                          </div>
                         </div>
                       </div>
                     </Card>
@@ -337,7 +427,7 @@ export function Home({ onNavigate }: HomeProps) {
           <h2 className="text-4xl md:text-6xl font-bold font-['Poppins'] mb-8">
             Ready to Get Started?
           </h2>
-          <p className="text-xl md:text-2xl mb-12 text-white/90 leading-relaxed">
+          {/* <p className="text-xl md:text-2xl mb-12 text-white/90 leading-relaxed">
             Join thousands of satisfied users who trust HeyB for their service needs
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -353,11 +443,24 @@ export function Home({ onNavigate }: HomeProps) {
               onClick={() => onNavigate("providers")}
               size="lg"
               variant="outline"
-              className="border-2 border-white text-white hover:bg-white/20 px-10 py-7 shadow-2xl hover:scale-105 transition-transform"
+              className="border-2 border-white text-primary hover:bg-white/20 px-10 py-7 shadow-2xl hover:scale-105 transition-transform"
             >
               Become a Provider
             </Button>
-          </div>
+          </div> */}
+          <div className="flex justify-center"
+            id="getWaitlistContainer"
+            data-waitlist_id="31757"
+            data-widget_type="WIDGET_1"
+          ></div>
+          <Helmet>
+            <link
+              rel="stylesheet"
+              type="text/css"
+              href="https://prod-waitlist-widget.s3.us-east-2.amazonaws.com/getwaitlist.min.css"
+            />
+            <script src="https://prod-waitlist-widget.s3.us-east-2.amazonaws.com/getwaitlist.min.js"></script>
+          </Helmet>
         </div>
       </section>
     </div>

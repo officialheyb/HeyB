@@ -94,7 +94,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               className="border-2 border-primary text-primary hover:bg-primary/10 px-6 py-2.5 transition-all duration-300 hover:scale-105"
               aria-label="Sign in to your account"
             >
-              Sign In
+              Join The Waitlist
             </Button>
             <Button 
               className="bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] hover:bg-[position:100%_0] transition-all duration-500 px-6 py-2.5 shadow-lg hover:shadow-xl hover:scale-105"

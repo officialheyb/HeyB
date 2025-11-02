@@ -304,7 +304,7 @@ export function HowItWorks({ onNavigate }: HowItWorksProps) {
               onClick={() => onNavigate("providers")}
               size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white/10"
+              className="border-white text-primary hover:bg-white/10"
             >
               I'm a Service Provider
             </Button>
