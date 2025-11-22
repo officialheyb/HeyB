@@ -5,7 +5,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Card } from "../ui/card";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { markdownToHtml } from "../utils/markdown";
@@ -322,19 +322,6 @@ export function BlogAdmin({ onLogout }: BlogAdminProps) {
         case 'k':
           e.preventDefault();
           insertLink();
-          break;
-        case 'z':
-          if (e.shiftKey) {
-            e.preventDefault();
-            handleRedo();
-          } else {
-            e.preventDefault();
-            handleUndo();
-          }
-          break;
-        case 'y':
-          e.preventDefault();
-          handleRedo();
           break;
       }
     }
