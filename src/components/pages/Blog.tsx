@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { useState, useEffect } from "react";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 
 interface BlogPost {
   id: string;
@@ -73,7 +73,7 @@ export function Blog({ onNavigate }: BlogProps) {
 
       if (data.success) {
         toast.success("Successfully subscribed!", {
-          description: "Thank you for subscribing to our newsletter."
+          description: "Thank you for subscribing to our newsletter!"
         });
         setNewsletterEmail("");
       } else {
