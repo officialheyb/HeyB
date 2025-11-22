@@ -27,6 +27,15 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Autoplay from "embla-carousel-autoplay";
 import { Helmet } from "react-helmet";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from "../ui/dialog";
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -34,6 +43,10 @@ interface HomeProps {
 
 export function Home({ onNavigate }: HomeProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [waitlistEmail, setWaitlistEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [savedEmail, setSavedEmail] = useState("");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,6 +58,120 @@ export function Home({ onNavigate }: HomeProps) {
       onNavigate("services");
     } else {
       toast.error("Please enter a service to search for");
+    }
+  };
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!waitlistEmail.trim()) {
+      toast.error("Please enter your email address");
+      return;
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(waitlistEmail)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Note: The provided URL is a published HTML view. You'll need to create a Google Apps Script
+      // web app that accepts POST requests and writes to your Google Sheet.
+      // Replace this URL with your actual Google Apps Script web app endpoint.
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbyUVNnpO7C3Stivxin25hGiSPpYCNsffADCBdC8Z1Wz-hlX1oobEJ9Ey7AOLTEF6Mia/exec";
+
+      const formData = new FormData();
+      formData.append("email", waitlistEmail);
+      formData.append("timestamp", new Date().toISOString());
+
+      // Try a normal POST first. Many Apps Script web apps block CORS and
+      // cause the fetch to throw. If that happens, fall back to a
+      // `no-cors` POST so the browser at least sends the request (response
+      // will be opaque). Note: `no-cors` cannot be inspected; prefer fixing
+      // the Apps Script to allow CORS for reliable behavior.
+      try {
+        const response = await fetch(scriptURL, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          toast.success("Successfully joined the waitlist!", {
+            description: "We'll notify you when HeyB launches!",
+          });
+          setSavedEmail(waitlistEmail);
+          setWaitlistEmail("");
+          setShowSuccessModal(true);
+        } else {
+          // If server responded but not OK, attempt a no-cors fallback.
+          console.warn(
+            "Waitlist POST returned non-ok status:",
+            response.status
+          );
+          try {
+            await fetch(scriptURL, {
+              method: "POST",
+              body: new URLSearchParams({
+                email: waitlistEmail,
+                timestamp: new Date().toISOString(),
+              }),
+              mode: "no-cors",
+            });
+            toast.success("Successfully joined the waitlist!", {
+              description: "We'll notify you when HeyB launches!",
+            });
+            setSavedEmail(waitlistEmail);
+            setWaitlistEmail("");
+            setShowSuccessModal(true);
+          } catch (fallbackErr) {
+            toast.error("Failed to join waitlist", {
+              description: "Please try again later or contact support.",
+            });
+            console.error("Fallback no-cors submission failed:", fallbackErr);
+          }
+        }
+      } catch (err) {
+        // Likely a CORS/network error — try the no-cors fallback so the
+        // browser will still send the request. This may succeed even when
+        // CORS blocks the normal fetch, but the response cannot be inspected.
+        console.warn("Primary POST failed, attempting no-cors fallback:", err);
+        try {
+          await fetch(scriptURL, {
+            method: "POST",
+            body: new URLSearchParams({
+              email: waitlistEmail,
+              timestamp: new Date().toISOString(),
+            }),
+            mode: "no-cors",
+          });
+          toast.success("Successfully joined the waitlist!", {
+            description: "We'll notify you when HeyB launches!",
+          });
+          setSavedEmail(waitlistEmail);
+          setWaitlistEmail("");
+          setShowSuccessModal(true);
+        } catch (fallbackErr) {
+          toast.error("Something went wrong", {
+            description: "Please try again later or contact support.",
+          });
+          console.error(
+            "Waitlist submission error (fallback failed):",
+            fallbackErr
+          );
+        }
+      }
+    } catch (error) {
+      toast.error("Something went wrong", {
+        description: "Please try again later or contact support.",
+      });
+      console.error("Waitlist submission error:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -425,44 +552,65 @@ export function Home({ onNavigate }: HomeProps) {
       <section className="py-24 bg-gradient-to-r from-primary via-secondary to-accent text-white relative overflow-hidden animate-gradient">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-bold font-['Poppins'] mb-8">
-            Ready to Get Started?
+            Join the Waitlist
           </h2>
-          {/* <p className="text-xl md:text-2xl mb-12 text-white/90 leading-relaxed">
-            Join thousands of satisfied users who trust HeyB for their service needs
+          <p className="text-xl md:text-2xl mb-12 text-white/90 leading-relaxed">
+            Be the first to know when HeyB launches. Get exclusive early access
+            to connect with verified service providers across Africa!
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button
-              onClick={() => onNavigate("clients")}
-              size="lg"
-              className="bg-white text-primary hover:bg-white/90 px-10 py-7 shadow-2xl hover:scale-105 transition-transform"
+
+          {/* Waitlist Form */}
+          <div className="flex justify-center">
+            <form
+              onSubmit={handleWaitlistSubmit}
+              className="glass rounded-2xl shadow-2xl p-3 flex flex-col sm:flex-row gap-3 max-w-3xl w-full hover-glow"
             >
-              <CheckCircle className="mr-2 w-6 h-6" />
-              Post a Job
-            </Button>
-            <Button
-              onClick={() => onNavigate("providers")}
-              size="lg"
-              variant="outline"
-              className="border-2 border-white text-primary hover:bg-white/20 px-10 py-7 shadow-2xl hover:scale-105 transition-transform"
-            >
-              Become a Provider
-            </Button>
-          </div> */}
-          <div className="flex justify-center"
-            id="getWaitlistContainer"
-            data-waitlist_id="31757"
-            data-widget_type="WIDGET_1"
-          ></div>
-          <Helmet>
-            <link
-              rel="stylesheet"
-              type="text/css"
-              href="https://prod-waitlist-widget.s3.us-east-2.amazonaws.com/getwaitlist.min.css"
-            />
-            <script src="https://prod-waitlist-widget.s3.us-east-2.amazonaws.com/getwaitlist.min.js"></script>
-          </Helmet>
+              <div className="flex-1 flex items-center px-4">
+                <Input
+                  type="email"
+                  placeholder="Enter your email address"
+                  className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent placeholder:text-muted-foreground/60 text-foreground"
+                  value={waitlistEmail}
+                  onChange={(e) => setWaitlistEmail(e.target.value)}
+                  disabled={isSubmitting}
+                  aria-label="Email address for waitlist"
+                />
+              </div>
+              <Button
+                type="submit"
+                className="bg-white text-primary hover:bg-white/90 px-8 sm:px-10 py-6 w-full sm:w-auto shadow-lg hover:scale-105 transition-transform"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Joining..." : "Join Waitlist"}
+              </Button>
+            </form>
+          </div>
         </div>
       </section>
+      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+        <DialogHeader className="sr-only">
+          <DialogTitle>Joined Waitlist</DialogTitle>
+          <DialogDescription>
+            Confirmation that you've joined the HeyB waitlist.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogContent>
+          <div className="flex flex-col items-center text-center gap-4 py-2">
+            <CheckCircle className="w-14 h-14 text-emerald-500" />
+            <h3 className="text-2xl font-bold">Joined Waitlist</h3>
+            <p className="text-muted-foreground">
+              Thanks! We'll notify{" "}
+              <span className="font-medium">{savedEmail}</span> when HeyB
+              launches.
+            </p>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button>Close</Button>
+              </DialogClose>
+            </DialogFooter>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
