@@ -303,7 +303,7 @@ export function BlogAdmin({ onLogout }: BlogAdminProps) {
             handleUndo();
           }
           break;
-        case 'z':
+        case 'y':
           e.preventDefault();
           handleRedo();
           break;
