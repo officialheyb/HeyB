@@ -89,19 +89,28 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="border-2 border-primary text-primary hover:bg-primary/10 px-6 py-2.5 transition-all duration-300 hover:scale-105"
-              aria-label="Sign in to your account"
+              aria-label="Join the waitlist"
+              onClick={() => {
+                // Ensure we navigate to home then scroll to the waitlist section
+                onNavigate("home");
+                // Small delay to allow page/content render before scrolling
+                setTimeout(() => {
+                  const el = document.getElementById("waitlist");
+                  if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+                }, 150);
+              }}
             >
               Join The Waitlist
             </Button>
-            <Button 
+            {/* <Button 
               className="bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] hover:bg-[position:100%_0] transition-all duration-500 px-6 py-2.5 shadow-lg hover:shadow-xl hover:scale-105"
               aria-label="Get started with HeyB"
             >
               Get Started
-            </Button>
+            </Button> */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -139,13 +148,21 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                 </button>
               ))}
               <div className="pt-4 flex flex-col space-y-2 px-4">
-                <Button 
-                  variant="outline" 
-                  className="w-full border-primary text-primary"
-                  aria-label="Sign in to your account"
-                >
-                  Join The Waitlist
-                </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full border-primary text-primary"
+                    aria-label="Join the waitlist"
+                    onClick={() => {
+                      onNavigate("home");
+                      setTimeout(() => {
+                        const el = document.getElementById("waitlist");
+                        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+                      }, 150);
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    Join The Waitlist
+                  </Button>
                 <Button 
                   className="w-full bg-gradient-to-r from-primary to-secondary"
                   aria-label="Get started with HeyB"
