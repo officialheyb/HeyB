@@ -599,7 +599,7 @@ export function Home({ onNavigate }: HomeProps) {
             <CheckCircle className="w-14 h-14 text-emerald-500" />
             <h3 className="text-2xl font-bold">Joined Waitlist</h3>
             <p className="text-muted-foreground">
-              Thanks! We'll notify ASAP{" "}
+              Thanks! We'll notify{" "}
               <span className="font-medium">{savedEmail}</span> when HeyB
               launches.
             </p>
