@@ -163,12 +163,12 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                   >
                     Join The Waitlist
                   </Button>
-                <Button 
+                {/* <Button 
                   className="w-full bg-gradient-to-r from-primary to-secondary"
                   aria-label="Get started with HeyB"
                 >
                   Get Started
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
