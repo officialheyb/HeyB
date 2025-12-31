@@ -2,6 +2,14 @@ import { Target, Eye, Heart, Award, Users, Globe, Code, Lightbulb, TrendingUp, S
 import { Card } from "../ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
+import amb1 from "../../assets/amb1.jpg";
+import amb2 from "../../assets/amb2.jpg";
+import amb3 from "../../assets/amb3.jpg";
+import amb4 from "../../assets/amb4.jpg";
+import amb5 from "../../assets/amb5.jpg";
+import amb6 from "../../assets/amb6.jpg";
+import amb7 from "../../assets/amb7.jpg";
 
 export function About() {
   const values = [
@@ -83,6 +91,59 @@ export function About() {
       color: "from-violet-500 to-fuchsia-600",
     },
   ];
+
+  const ambassadors = [
+    {
+      name: "The Taofeek Alata",
+      post: "Regional Ambassador - Ilorin",
+      location: "Kwara, Ilorin, Nigeria",
+      image: amb1,
+    },
+    {
+      name: "Olayimika Priscilla Olamide",
+      post: "Regional Ambassador - Ilorin",
+      location: "Kwara, Ilorin, Nigeria",
+      image: amb2,
+    },
+    {
+      name: "Yisa-Apata Taofeek",
+      post: "Regional Ambassador - Ilorin",
+      location: "Kwara, Ilorin, Nigeria",
+      image: amb3,
+    },
+    {
+      name: "Lawal Aakeefah",
+      post: "Regional Ambassador - Ilorin",
+      location: "Kwara, Ilorin, Nigeria",
+      image: amb4,
+    },
+    {
+      name: "Ambassador Kehinde Fadhlullah Abiodun",
+      post: "Regional Ambassador - Ilorin",
+      location: "Kwara, Ilorin, Nigeria",
+      image: amb5,
+    },
+    {
+      name: "Comrade Cole Joel  Temitope",
+      post: "Regional Ambassador - Ogun",
+      location: "FUNAAB, Ogun State, Nigeria",
+      image: amb6,
+    },
+    {
+      name: "Olamide Israel Olaoluwa",
+      post: "Regional Ambassador - Ogun",
+      location: "FUNAAB, Ogun State, Nigeria",
+      image: amb7,
+    },
+  ];
+
+  const autoplayPluginTeam = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: true })
+  );
+
+  const autoplayPluginAmbassadors = useRef(
+    Autoplay({ delay: 3500, stopOnInteraction: true })
+  );
 
   return (
     <div className="min-h-screen">
@@ -251,9 +312,7 @@ export function About() {
           <div className="max-w-5xl mx-auto">
             <Carousel
               plugins={[
-                Autoplay({
-                  delay: 4000,
-                })
+                autoplayPluginTeam.current,
               ]}
               opts={{
                 align: "start",
@@ -270,6 +329,58 @@ export function About() {
                       </div>
                       <h3 className="text-xl font-['Poppins'] mb-3">{member.role}</h3>
                       <p className="text-muted-foreground leading-relaxed">{member.description}</p>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex justify-center gap-2 mt-8">
+                <CarouselPrevious className="relative left-0 translate-x-0 translate-y-0 bg-primary text-white hover:bg-primary/90 border-0" />
+                <CarouselNext className="relative right-0 translate-x-0 translate-y-0 bg-primary text-white hover:bg-primary/90 border-0" />
+              </div>
+            </Carousel>
+          </div>
+        </div>
+      </section>
+
+      {/* Ambassadors Section */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="floating-shape floating-shape-3"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold font-['Poppins'] mb-6 text-primary">
+              Meet Our Ambassadors
+            </h2>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Leading the charge in regional growth and engagement
+            </p>
+          </div>
+
+          {/* Carousel for all screens */}
+          <div className="max-w-5xl mx-auto">
+            <Carousel
+              plugins={[
+                autoplayPluginAmbassadors.current,
+              ]}
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {ambassadors.map((ambassador, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                    <Card className="p-8 text-center hover:shadow-2xl transition-all duration-500 border-2 border-transparent hover:border-primary/30 bg-white/80 backdrop-blur-sm group h-full">
+                      <div className="w-full aspect-square mx-auto mb-6 overflow-hidden shadow-xl group-hover:scale-105 transition-transform duration-300 bg-gradient-to-br from-primary via-secondary to-accent p-1 rounded-xl">
+                        <img 
+                          src={ambassador.image} 
+                          alt={ambassador.name} 
+                          className="w-full h-full object-cover rounded-lg bg-white" 
+                        />
+                      </div>
+                      <h3 className="text-xl font-['Poppins'] mb-2">{ambassador.name}</h3>
+                      <p className="text-muted-foreground mb-1">{ambassador.post}</p>
+                      <p className="text-sm text-muted-foreground/80">{ambassador.location}</p>
                     </Card>
                   </CarouselItem>
                 ))}
